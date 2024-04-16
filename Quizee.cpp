@@ -2,6 +2,42 @@
 #include <fstream>
 #include <string>
 using namespace std;
+void welcome()
+{
+    cout << "                  ";
+    for (int i = 0; i < 30; i++)
+    {
+        cout << "= ";
+    }
+    cout << endl
+         << endl;
+    cout << "                                  ";
+    cout << "Quizee : Online exam system";
+    cout << endl
+         << endl;
+    cout << "                  ";
+    for (int i = 0; i < 30; i++)
+    {
+        cout << "= ";
+    }
+    cout << endl
+         << endl
+         << endl;
+    cout << "                                       ";
+    cout << "Prepared by :" << endl;
+    cout << "                                      ";
+    cout << "Meharjot Singh" << endl;
+    cout << "                                   ";
+    cout << "Chitkara University" << endl;
+    cout << endl
+         << endl
+         << endl
+         << endl;
+    cout << "Press any key to continue....";
+    getchar();
+    cout << endl
+         << endl;
+}
 class loginpg
 {
 public:
@@ -28,8 +64,19 @@ public:
     }
     void login()
     {
-        cout << "Are you a student or teacher: ";
-        cin >> st;
+        int tellstte;
+        cout << "Are you a student or teacher: " << endl
+             << "Press 1 for student" << endl
+             << "Press 2 for Teacher" << endl;
+        cin >> tellstte;
+        if (tellstte == 1)
+        {
+            st = "student";
+        }
+        if (tellstte == 2)
+        {
+            st = "teacher";
+        }
         if (st == "student" || st == "Student")
         {
             cout << endl
@@ -136,9 +183,19 @@ public:
     }
     void regi()
     {
-        cout << endl
-             << "Are you a student or a teacher: ";
-        cin >> st;
+        int tellstte;
+        cout << "Are you a student or teacher: " << endl
+             << "Press 1 for student" << endl
+             << "Press 2 for Teacher" << endl;
+        cin >> tellstte;
+        if (tellstte == 1)
+        {
+            st = "student";
+        }
+        if (tellstte == 2)
+        {
+            st = "teacher";
+        }
         if (st == "student" || st == "Student")
         {
             ifstream file2;
@@ -287,16 +344,91 @@ public:
         cout << endl
              << "Welcome to teacher's portal for Quizee.";
         cout << endl
-             << "Press S to set question paper or R to read feedback of students or press L to logout: ";
+             << "Press S to set question paper" << endl
+             << "Press R to read feedback of students" << endl
+             << "Press D to see doubt of students" << endl
+             << "Press M to display marks of students " << endl
+             << " Press L to logout" << endl;
         cin >> fun;
         if (fun == 'S' || fun == 's')
         {
             Set();
         }
+        if (fun == 'D' || fun == 'd')
+        {
+            read_doubt();
+        }
         if (fun == 'r' || fun == 'R')
         {
             read_review();
         }
+        if (fun == 'M' || fun == 'm')
+        {
+            read_mark();
+        }
+    }
+    void read_doubt()
+    {
+        string doubtre;
+        cout << endl
+             << "You can see doubt of students here: " << endl;
+        ifstream doubt;
+        doubt.open("doubts.txt", ios::app);
+        while (getline(doubt, doubtre))
+        {
+            cout << doubtre << endl;
+        }
+        cout << endl
+             << "Thanks for entertaining doubts of students. We are redirecting you to home page.";
+        Teacher();
+    }
+    void read_mark()
+    {
+        string markre1;
+        ifstream mark1;
+        mark1.open("marks.txt", ios::app);
+        int couline = 0;
+        while (getline(mark1, markre1))
+        {
+            couline++;
+        }
+        couline = couline / 3 - 1;
+        string markre;
+        cout << endl
+             << "You can read feedback of students here: " << endl;
+        ifstream mark;
+        mark.open("marks.txt", ios::app);
+        for (int i = 0; i < 45; i++)
+        {
+            cout << "= ";
+        }
+        cout << endl;
+        cout << "    S.NO";
+        cout << "    Student Name";
+        cout << "                  Test Name";
+        cout << "                  Marks Obtained";
+        cout << endl;
+        for (int i = 0; i < 45; i++)
+        {
+            cout << "= ";
+        }
+        cout << endl;
+        int cou = 0;
+        while (cou <= couline)
+        {
+            cou++;
+            cout << "    " << cou;
+            getline(mark, markre);
+            cout << "       " << markre;
+            getline(mark, markre);
+            cout << "                     " << markre;
+            getline(mark, markre);
+            cout << "                           " << markre;
+            cout << endl;
+        }
+        cout << endl
+             << "We are redirecting you to home page.";
+        Teacher();
     }
     void Set()
     {
@@ -374,19 +506,26 @@ public:
         {
             cout << revre << endl;
         }
+        cout << endl
+             << "Thanks for reading feedback of students. We are redirecting you to home page.";
+        Teacher();
     }
 };
 class Student
 {
 public:
     char fun;
-    string namestud;
-    Student(string namestu)
+    string namestud, rollstud;
+    Student(string namestu, string rollstu)
     {
+        system("cls");
+        rollstud = rollstu;
         namestud = namestu;
         cout << endl
              << "Welcome to students portal." << endl;
-        cout << "Press T for giving tests or press D for sending doubts to your teacher or press L to logout: ";
+        cout << "Press T for giving tests" << endl
+             << "Press D for sending doubts to your teacher" << endl
+             << "Press L to logout" << endl;
         cin >> fun;
         if (fun == 'T' || fun == 't')
         {
@@ -404,7 +543,7 @@ public:
         file.open("name_test.txt", ios::app);
         string line, topic, read, line1;
         string doub;
-        char cor_op, op;
+        char cor_op, op, cor_op1;
         cout << "Choose the topic on which you want to give the test: " << endl;
         int i = 1;
         while (getline(file, line))
@@ -462,62 +601,122 @@ public:
                 marks = marks + dec;
             }
         }
-        ofstream file3;
         cout << "You scored " << marks << " marks in test." << endl;
-        file3.open("marks.txt", ios::app);
-        file3 << namestud << " scored " << marks << " in " << topic_name << " test." << endl;
+        ifstream file4, file5, file8;
+        ofstream file3, file6, file7;
+        file7.open("marks.txt", ios::app);
+        string name_test_mark;
+        file6.open("test_name_marks.txt", ios::app);
+        file4.open("name_test.txt", ios::app);
+        name_test_mark = topic_name;
+        file6 << name_test_mark << endl;
+        name_test_mark = name_test_mark + "_marks.txt";
+        file3.open(name_test_mark, ios::app);
+        file8.open(name_test_mark, ios::app);
+        file5.open(topic, ios::app);
+        getline(file5, read);
+        inc = stoi(read);
+        getline(file5, read);
+        if (read == "Yes" || read == "yes")
+        {
+            dec = -1;
+        }
+        else
+        {
+            dec = 0;
+        }
+        number_line = 0;
+        while (getline(file5, line1))
+        {
+            file3 << line1 << endl;
+            getline(file5, read);
+            file3 << read << endl;
+            getline(file5, read);
+            file3 << read << endl;
+            getline(file5, read);
+            file3 << read << endl;
+            getline(file5, read);
+            file3 << read << endl;
+            file1.get(cor_op1);
+            file3 << "Correct option is : " << cor_op << endl;
+        }
+        file3 << endl
+              << namestud << " ( " << rollstud << " )" << " scored "
+              << marks << " marks in "
+              << topic_name << " test." << endl;
+        file7 << namestud << " ( " << rollstud << " )" << endl
+              << topic_name << endl
+              << marks << endl;
+        string tell_key, tell_ans_key;
+        cout << "Do you want to download answer key? [yes/no]" << endl;
+        cin >> tell_key;
+        if (tell_key == "yes" || tell_key == "Yes")
+        {
+            while (getline(file8, tell_ans_key))
+            {
+                cout << endl
+                     << tell_ans_key;
+            }
+            cout << endl;
+        }
         cout << "Do you have any doubts? [Yes/No]";
         cin >> doub;
         cin.ignore();
         if (doub == "Yes" || doub == "yes")
         {
+            cin.ignore();
             doubt();
         }
         else
         {
             cout << endl
                  << "You are being redirected to feedback section: ";
+            cin.ignore();
             feedback();
         }
     }
     void doubt()
     {
+        cin.ignore();
         ofstream doubt;
         string dou;
         doubt.open("doubts.txt", ios::app);
-        doubt << namestud << endl;
+        doubt << namestud << " ( " << rollstud << " ) : ";
         cout << "You can write your doubts here: (Press Enter to end)";
         getline(cin, dou);
         doubt << dou << " ";
-        cin.ignore();
+        doubt << endl;
         cout << endl
              << "You are being redirected to feedback section: ";
+        cin.ignore();
         feedback();
     }
     void feedback()
     {
-        cout << endl
-             << "You can write your feedback here: (Press Enter to end)" << endl;
         ofstream feedback;
         string feed;
         feedback.open("feedback.txt", ios::app);
-        feedback << namestud << endl;
+        feedback << namestud << " ( " << rollstud << " ) : ";
+        cout << endl
+             << "You can write your feedback here: (Press Enter to end)" << endl;
         getline(cin, feed);
         feedback << feed << " ";
+        feedback << endl;
         cout << endl
              << "Thank you for your feedback. We are redirecting you to home page.";
-        Student stude(namestud);
+        Student stude(namestud, rollstud);
     }
 };
 int main()
 {
+    welcome();
     char fwd;
     do
     {
         loginpg l;
         if (l.done == 'S')
         {
-            Student stu(l.username);
+            Student stu(l.username, l.roll);
             if (stu.fun == 'L' || stu.fun == 'l')
             {
                 cout << "You have been logged out." << endl
