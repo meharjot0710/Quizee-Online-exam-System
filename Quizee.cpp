@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <vector>
 using namespace std;
 void welcome()
 {
@@ -66,14 +67,14 @@ public:
     {
         int tellstte;
         cout << "Are you a student or teacher: " << endl
-             << "Press 1 for student" << endl
-             << "Press 2 for Teacher" << endl;
+             << "Press 1 for Teacher" << endl
+             << "Press 2 for Student" << endl;
         cin >> tellstte;
-        if (tellstte == 1)
+        if (tellstte == 2)
         {
             st = "student";
         }
-        if (tellstte == 2)
+        if (tellstte == 1)
         {
             st = "teacher";
         }
@@ -113,6 +114,8 @@ public:
                     }
                     if (line1 == pass)
                     {
+
+                        system("cls");
                         cout << endl
                              << "Welcome " << username << endl;
                         done = 'S';
@@ -158,6 +161,7 @@ public:
                         }
                         if (line1 == pass)
                         {
+                            system("cls");
                             cout << endl
                                  << "Welcome " << username << endl;
                             done = 'T';
@@ -185,14 +189,14 @@ public:
     {
         int tellstte;
         cout << "Are you a student or teacher: " << endl
-             << "Press 1 for student" << endl
-             << "Press 2 for Teacher" << endl;
+             << "Press 1 for Teacher" << endl
+             << "Press 2 for Student" << endl;
         cin >> tellstte;
-        if (tellstte == 1)
+        if (tellstte == 2)
         {
             st = "student";
         }
-        if (tellstte == 2)
+        if (tellstte == 1)
         {
             st = "teacher";
         }
@@ -348,7 +352,7 @@ public:
              << "Press R to read feedback of students" << endl
              << "Press D to see doubt of students" << endl
              << "Press M to display marks of students " << endl
-             << " Press L to logout" << endl;
+             << "Press L to logout" << endl;
         cin >> fun;
         if (fun == 'S' || fun == 's')
         {
@@ -421,7 +425,7 @@ public:
             getline(mark, markre);
             cout << "       " << markre;
             getline(mark, markre);
-            cout << "                     " << markre;
+            cout << "               " << markre;
             getline(mark, markre);
             cout << "                           " << markre;
             cout << endl;
@@ -481,7 +485,7 @@ public:
             cout << "Enter the correct option: ";
             cin >> ans;
             cin.ignore();
-            file << ans;
+            file << ans << endl;
             cout << "Do you want to write another question?" << endl
                  << "Press Y to write and N to exit.";
             cin >> cont;
@@ -518,7 +522,6 @@ public:
     string namestud, rollstud;
     Student(string namestu, string rollstu)
     {
-        system("cls");
         rollstud = rollstu;
         namestud = namestu;
         cout << endl
@@ -555,7 +558,7 @@ public:
         cin >> topic;
         string topic_name = topic;
         topic = topic + ".txt";
-        file1.open(topic);
+        file1.open(topic, ios::app);
         getline(file1, read);
         inc = stoi(read);
         getline(file1, read);
@@ -568,6 +571,7 @@ public:
             dec = 0;
         }
         int number_line = 0;
+        char correctAnswer;
         while (getline(file1, line1))
         {
             cout << line1 << endl;
@@ -579,10 +583,10 @@ public:
             cout << read << endl;
             getline(file1, read);
             cout << read << endl;
+            getline(file1, read);
             cin >> op;
-            cin.ignore();
-            file1.get(cor_op);
-            char line = cor_op;
+            cor_op = read[0];
+            char line = read[0];
             int num;
             if (int(line) > 96)
             {
@@ -617,14 +621,6 @@ public:
         getline(file5, read);
         inc = stoi(read);
         getline(file5, read);
-        if (read == "Yes" || read == "yes")
-        {
-            dec = -1;
-        }
-        else
-        {
-            dec = 0;
-        }
         number_line = 0;
         while (getline(file5, line1))
         {
@@ -637,8 +633,9 @@ public:
             file3 << read << endl;
             getline(file5, read);
             file3 << read << endl;
-            file1.get(cor_op1);
-            file3 << "Correct option is : " << cor_op << endl;
+            getline(file5, read);
+            file3 << "Correct option is : " << read << endl;
+            file3 << endl;
         }
         file3 << endl
               << namestud << " ( " << rollstud << " )" << " scored "
@@ -707,32 +704,35 @@ public:
         Student stude(namestud, rollstud);
     }
 };
+void infi_log_loop()
+{
+    loginpg l;
+    if (l.done == 'S')
+    {
+        Student stu(l.username, l.roll);
+    }
+    if (l.done == 'T')
+    {
+        Teacher te;
+    }
+}
 int main()
 {
+    string tell;
     welcome();
-    char fwd;
-    do
+    while (true)
     {
-        loginpg l;
-        if (l.done == 'S')
+        infi_log_loop();
+        cout << "Do you wish to continue further? [yes/no] " << endl;
+        cin >> tell;
+        if (tell == "yes" || tell == "Yes")
         {
-            Student stu(l.username, l.roll);
-            if (stu.fun == 'L' || stu.fun == 'l')
-            {
-                cout << "You have been logged out." << endl
-                     << "Do you wish to proceed further? [y/n]";
-                cin >> fwd;
-            }
+            system("cls");
+            infi_log_loop();
         }
-        if (l.done == 'T')
+        else
         {
-            Teacher te;
-            if (te.fun == 'L' || te.fun == 'l')
-            {
-                cout << "You have been logged out." << endl
-                     << "Do you wish to proceed further? [y/n]";
-                cin >> fwd;
-            }
+            break;
         }
-    } while (fwd == 'y' || fwd == 'Y');
+    }
 }
