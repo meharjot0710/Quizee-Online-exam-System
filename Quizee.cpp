@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <cstdio>
 using namespace std;
 void welcome()
 {
@@ -441,12 +442,6 @@ public:
     }
     void Set()
     {
-        int cred;
-        string neg;
-        char fun;
-        char cont;
-        string sub;
-        // Code start
         int type_sub, test_do;
         string subt, name;
         cout << "Enter the topic on which you want to input practice questions for students: ";
@@ -494,11 +489,128 @@ public:
                 cout << "Press 1 for adding questions" << endl;
                 cout << "Press 2 for overwriting the test" << endl;
                 cin >> test_do;
+                cin.ignore();
                 if (test_do == 1)
                 {
+                    string fname;
+                    fname = subt + "_objective.txt";
+                    file.open(fname, ios::app);
+                    string ques;
+                    while (true)
+                    {
+                        cout << "Enter the question (Press Enter to end):";
+                        getline(cin, ques);
+                        if (ques.empty())
+                            break;
+                        file << ques << " ";
+                        if (cont == 'n' || cont == 'N')
+                        {
+                            break;
+                        }
+                        cout << "Enter the first option: ";
+                        cin >> op1;
+                        cin.ignore();
+                        file << endl
+                             << "A: " << op1 << endl;
+                        cout << "Enter the second option: ";
+                        cin >> op2;
+                        cin.ignore();
+                        file << "B: " << op2 << endl;
+                        cout << "Enter the third option: ";
+                        cin >> op3;
+                        cin.ignore();
+                        file << "C: " << op3 << endl;
+                        cout << "Enter the fourth option: ";
+                        cin >> op4;
+                        cin.ignore();
+                        file << "D: " << op4 << endl;
+                        cout << "Enter the correct option: ";
+                        cin >> ans;
+                        cin.ignore();
+                        file << ans << endl;
+                        cout << "Do you want to write another question?" << endl
+                             << "Press Y to write and N to exit.";
+                        cin >> cont;
+                        cin.ignore();
+                        if (cont == 'N' || cont == 'n')
+                        {
+                            break;
+                        }
+                    }
+                    cin.ignore();
+                    cout << endl
+                         << "Your test has been created sucessfully." << endl;
+                    cout << "Press enter to continue....";
+                    getchar();
+                    system("cls");
+                    Teacher();
                 }
                 if (test_do == 2)
                 {
+                    string fname;
+                    fname = subt + "_objective.txt";
+                    remove(fname.c_str());
+                    cout << endl
+                         << "The old test has been deleted." << endl;
+                    file.open(fname, ios::app);
+                    cout << "Credit for each question: " << endl;
+                    cin >> cred;
+                    cin.ignore();
+                    file << cred << endl;
+                    cout << "Do you want to keep negative marking for the test: [yes/no]";
+                    cin >> neg;
+                    cin.ignore();
+                    file << neg << endl;
+                    cont = 'Y';
+                    string ques;
+                    while (true)
+                    {
+                        cout << "Enter the question (Press Enter to end):";
+                        getline(cin, ques);
+                        if (ques.empty())
+                            break;
+                        file << ques << " ";
+                        if (cont == 'n' || cont == 'N')
+                        {
+                            break;
+                        }
+                        cout << "Enter the first option: ";
+                        cin >> op1;
+                        cin.ignore();
+                        file << endl
+                             << "A: " << op1 << endl;
+                        cout << "Enter the second option: ";
+                        cin >> op2;
+                        cin.ignore();
+                        file << "B: " << op2 << endl;
+                        cout << "Enter the third option: ";
+                        cin >> op3;
+                        cin.ignore();
+                        file << "C: " << op3 << endl;
+                        cout << "Enter the fourth option: ";
+                        cin >> op4;
+                        cin.ignore();
+                        file << "D: " << op4 << endl;
+                        cout << "Enter the correct option: ";
+                        cin >> ans;
+                        cin.ignore();
+                        file << ans << endl;
+                        cout << "Do you want to write another question?" << endl
+                             << "Press Y to write and N to exit.";
+                        cin >> cont;
+                        cin.ignore();
+                        if (cont == 'N' || cont == 'n')
+                        {
+                            break;
+                        }
+                    }
+                    cin.ignore();
+                    cout << endl
+                         << "Your test has been created sucessfully." << endl;
+                    cout << "Press enter to continue....";
+                    getchar();
+                    system("cls");
+                    Teacher();
                 }
             }
             if (rea != "Objective")
@@ -586,11 +698,69 @@ public:
                 cout << "Press 1 for adding questions" << endl;
                 cout << "Press 2 for overwriting the test" << endl;
                 cin >> test_do;
+                cin.ignore();
                 if (test_do == 1)
                 {
+                    string fname;
+                    fname = subt + "_true.txt";
+                    file.open(fname, ios::app);
+                    string ques;
+                    while (true)
+                    {
+                        cout << "Enter the question (Press Enter to end):";
+                        getline(cin, ques);
+                        if (ques.empty())
+                            break;
+                        file << ques << " ";
+                        cout << "Do you want to write another question?" << endl
+                             << "Press Y to write and N to exit.";
+                        cin >> cont;
+                        if (cont == 'N' || cont == 'n')
+                        {
+                            break;
+                        }
+                    }
+                    cout << endl
+                         << "Your test has been created sucessfully." << endl;
+                    cout << "Press enter to continue....";
+                    getchar();
+                    system("cls");
+                    Teacher();
                 }
                 if (test_do == 2)
                 {
+                    string fname;
+                    fname = subt + "_true.txt";
+                    remove(fname.c_str());
+                    cout << endl
+                         << "The old test has been deleted." << endl;
+                    file.open(fname, ios::app);
+                    cout << "Enter credit for each question: " << endl;
+                    cin >> cred;
+                    cin.ignore();
+                    file << cred << endl;
+                    string ques;
+                    while (true)
+                    {
+                        cout << "Enter the question (Press Enter to end):";
+                        getline(cin, ques);
+                        if (ques.empty())
+                            break;
+                        file << ques << " ";
+                        cout << "Do you want to write another question?" << endl
+                             << "Press Y to write and N to exit.";
+                        cin >> cont;
+                        if (cont == 'N' || cont == 'n')
+                        {
+                            break;
+                        }
+                    }
+                    cout << endl
+                         << "Your test has been created sucessfully." << endl;
+                    cout << "Press enter to continue....";
+                    getchar();
+                    system("cls");
+                    Teacher();
                 }
             }
             if (rea != "True/False")
@@ -601,6 +771,7 @@ public:
                 file.open(fname, ios::app);
                 cout << "Enter credit for each question: " << endl;
                 cin >> cred;
+                cin.ignore();
                 file << cred << endl;
                 string ques;
                 while (true)
@@ -645,11 +816,73 @@ public:
                 cout << "Press 1 for adding questions" << endl;
                 cout << "Press 2 for overwriting the test" << endl;
                 cin >> test_do;
+                cin.ignore();
                 if (test_do == 1)
                 {
+                    string fname;
+                    fname = subt + "_short.txt";
+                    file.open(fname, ios::app);
+                    string ques;
+                    while (true)
+                    {
+                        cout << "Enter the question (Press Enter to end):";
+                        getline(cin, ques);
+                        if (ques.empty())
+                            break;
+                        file << ques << " ";
+                        cout << "Do you want to write another question?" << endl
+                             << "Press Y to write and N to exit.";
+                        cin >> cont;
+                        file << endl;
+                        if (cont == 'N' || cont == 'n')
+                        {
+                            break;
+                        }
+                    }
+                    cin.ignore();
+                    cout << endl
+                         << "Your test has been updated sucessfully." << endl;
+                    cout << "Press enter to continue....";
+                    getchar();
+                    system("cls");
+                    Teacher();
                 }
                 if (test_do == 2)
                 {
+                    string fname;
+                    fname = subt + "_short.txt";
+                    remove(fname.c_str());
+                    cout << endl
+                         << "The old test has been deleted." << endl;
+                    file.open(fname, ios::app);
+                    cout << "Enter credit for each question: " << endl;
+                    cin >> cred;
+                    cin.ignore();
+                    file << cred << endl;
+                    string ques;
+                    while (true)
+                    {
+                        cout << "Enter the question (Press Enter to end):";
+                        getline(cin, ques);
+                        if (ques.empty())
+                            break;
+                        file << ques << " ";
+                        cout << "Do you want to write another question?" << endl
+                             << "Press Y to write and N to exit.";
+                        cin >> cont;
+                        file << endl;
+                        if (cont == 'N' || cont == 'n')
+                        {
+                            break;
+                        }
+                    }
+                    cin.ignore();
+                    cout << endl
+                         << "Your test has been created sucessfully." << endl;
+                    cout << "Press enter to continue....";
+                    getchar();
+                    system("cls");
+                    Teacher();
                 }
             }
             if (rea != "Short Answer")
@@ -660,6 +893,7 @@ public:
                 file.open(fname, ios::app);
                 cout << "Enter credit for each question: " << endl;
                 cin >> cred;
+                cin.ignore();
                 file << cred << endl;
                 string ques;
                 while (true)
