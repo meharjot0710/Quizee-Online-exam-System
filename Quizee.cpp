@@ -337,304 +337,6 @@ public:
         }
     }
 };
-class loginpg
-{
-public:
-    char done;
-    char log, check, stutea;
-    string username, pass, passcreate, passcreate1, user, st, roll;
-    string num;
-    loginpg()
-    {
-        cout << "Welcome to Quizee";
-        cout << endl
-             << "Press L for login and R for registering a new account: ";
-        cin >> log;
-        cout << endl
-             << "Enter your details to continue: " << endl;
-        if (log == 'L' || log == 'l')
-        {
-            login();
-        }
-        if (log == 'R' || log == 'r')
-        {
-            regi();
-        }
-    }
-    void login()
-    {
-        int tellstte;
-        cout << "Are you a student or teacher: " << endl
-             << "Press 1 for Teacher" << endl
-             << "Press 2 for Student" << endl;
-        cin >> tellstte;
-        if (tellstte == 2)
-        {
-            st = "student";
-        }
-        if (tellstte == 1)
-        {
-            st = "teacher";
-        }
-        if (st == "student" || st == "Student")
-        {
-            cout << endl
-                 << "Enter your Roll number: ";
-            cin >> roll;
-            cout << endl
-                 << "Enter your password: ";
-            cin >> pass;
-            ifstream file1, file2, file10;
-            string line, line1;
-            int count = 0;
-            file1.open("studentroll.txt", ios::app);
-            while (getline(file1, line))
-            {
-                count++;
-                if (line == roll)
-                {
-                    string line10;
-                    file10.open("studentuser.txt", ios::app);
-                    int m1 = 0;
-                    while (m1 < count)
-                    {
-                        m1++;
-                        getline(file10, line10);
-                    }
-                    username = line10;
-                    string line1;
-                    file2.open("studentpass.txt", ios::app);
-                    int m = 0;
-                    while (m < count)
-                    {
-                        m++;
-                        getline(file2, line1);
-                    }
-                    if (line1 == pass)
-                    {
-
-                        system("cls");
-                        cout << endl
-                             << "Welcome " << username << endl;
-                        done = 'S';
-                        break;
-                    }
-                    else
-                    {
-                        cout << endl
-                             << "Password doesn't match. Try again" << endl;
-                        login();
-                    }
-                    break;
-                }
-            }
-        }
-        if (st == "teacher" || st == "Teacher")
-        {
-            cout << endl
-                 << "Enter your name: ";
-            cin >> username;
-            cout << endl
-                 << "Enter your password: ";
-            cin >> pass;
-
-            if (st == "teacher" || st == "Teacher")
-            {
-                ifstream file1, file2;
-                string line, line1;
-                int count = 0;
-                file1.open("teacheruser.txt");
-                while (getline(file1, line))
-                {
-                    count++;
-                    if (line == username)
-                    {
-                        string line1;
-                        file2.open("teacherpass.txt", ios::app);
-                        int m = 0;
-                        while (m < count)
-                        {
-                            m++;
-                            getline(file2, line1);
-                        }
-                        if (line1 == pass)
-                        {
-                            system("cls");
-                            cout << endl
-                                 << "Welcome " << username << endl;
-                            done = 'T';
-                            break;
-                        }
-                        else
-                        {
-                            cout << endl
-                                 << "Password doesn't match. Try again" << endl;
-                            login();
-                        }
-                        break;
-                    }
-                }
-                if (line != username)
-                {
-                    cout << endl
-                         << "Username not found. Please try again." << endl;
-                    login();
-                }
-            }
-        }
-    }
-    void regi()
-    {
-        int tellstte;
-        cout << "Are you a student or teacher: " << endl
-             << "Press 1 for Teacher" << endl
-             << "Press 2 for Student" << endl;
-        cin >> tellstte;
-        if (tellstte == 2)
-        {
-            st = "student";
-        }
-        if (tellstte == 1)
-        {
-            st = "teacher";
-        }
-        if (st == "student" || st == "Student")
-        {
-            ifstream file2;
-            string line2;
-            int count1 = 0;
-            cout << endl
-                 << "Enter your roll number: ";
-            cin >> num;
-            file2.open("studentroll.txt");
-            while (getline(file2, line2))
-            {
-                if (line2 == num)
-                {
-                    cout << endl
-                         << "User already exists. Try loging in." << endl;
-                    login();
-                    break;
-                }
-                count1++;
-            }
-            cout << endl
-                 << "Enter your name: ";
-            cin >> user;
-        }
-        if (st == "teacher" || st == "Teacher")
-        {
-            cout << endl
-                 << "Enter your contact number: ";
-            cin >> num;
-            cout << endl
-                 << "Enter your name: ";
-            cin >> user;
-            ifstream file1;
-            string line, line1;
-            int count = 0;
-            file1.open("teacheruser.txt");
-            while (getline(file1, line))
-            {
-                count++;
-                if (line == username)
-                {
-                    cout << endl
-                         << "User already exists. Try loging in." << endl;
-                    login();
-                    break;
-                }
-            }
-        }
-        cout << endl
-             << "Enter a password: ";
-        cin >> passcreate;
-        cout << endl
-             << "Confirm your password: ";
-        cin >> passcreate1;
-        while (passcreate != passcreate1)
-        {
-            cout << endl
-                 << "Enter matching passwords" << endl;
-            cout << "Enter a password: ";
-            cin >> passcreate;
-            cout << endl
-                 << "Confirm your password: ";
-            cin >> passcreate1;
-        }
-        if (st == "teacher" || st == "Teacher")
-        {
-            detailste();
-        }
-        if (st == "student" || st == "Student")
-        {
-            detailsstu();
-        }
-    }
-    void detailste()
-    {
-        cout << "Please check your details: " << endl;
-        cout << "Type: " << st << endl;
-        cout << "Contact number: " << num << endl
-             << "Username: " << user << endl;
-        cout << "Password: " << passcreate;
-        cout << endl
-             << "Press C to continue: ";
-        cin >> check;
-        if (check == 'R' || check == 'r')
-        {
-            regi();
-        }
-        if (check == 'C' || check == 'c')
-        {
-            cout << endl
-                 << "Your account has been registered.";
-            ofstream file, file1;
-            file.open("teacheruser.txt", ios::app);
-            file << user << endl;
-            file.close();
-            file1.open("teacherpass.txt", ios::app);
-            file1 << passcreate << endl;
-            file1.close();
-            cout << endl
-                 << "You are being redirected to login page." << endl;
-            login();
-        }
-    }
-    void detailsstu()
-    {
-        cout << "Please check your details: " << endl;
-        cout << "Type: " << st << endl;
-        cout << "Roll number: " << num << endl
-             << "Username: " << user << endl;
-        cout << "Password: " << passcreate;
-        cout << endl
-             << "Press C to continue: ";
-        cin >> check;
-        if (check == 'R' || check == 'r')
-        {
-            regi();
-        }
-        if (check == 'C' || check == 'c')
-        {
-            cout << endl
-                 << "Your account has been registered.";
-            ofstream file, file1, file2;
-            file.open("studentuser.txt", ios::app);
-            file << user << endl;
-            file.close();
-            file1.open("studentpass.txt", ios::app);
-            file1 << passcreate << endl;
-            file1.close();
-            file2.open("studentroll.txt", ios::app);
-            file2 << num << endl;
-            file2.close();
-            cout << endl
-                 << "You are being redirected to login page." << endl;
-            login();
-        }
-    }
-};
 class Teacher
 {
 public:
@@ -704,17 +406,17 @@ public:
              << "You can see marks of students here: " << endl;
         ifstream mark;
         mark.open("marks.txt", ios::app);
-        for (int i = 0; i < 45; i++)
+        for (int i = 0; i <= 55; i++)
         {
             cout << "= ";
         }
-        cout << endl;
-        cout << "    S.NO";
+        cout << "  S.NO";
         cout << "    Student Name";
         cout << "                  Test Name";
+        cout << "                  Test Type";
         cout << "                  Marks Obtained";
         cout << endl;
-        for (int i = 0; i < 45; i++)
+        for (int i = 0; i <= 55; i++)
         {
             cout << "= ";
         }
@@ -723,16 +425,56 @@ public:
         while (cou <= couline)
         {
             cou++;
-            cout << "    " << cou;
+            cout << "  " << cou;
             getline(mark, markre);
             cout << "       " << markre;
+            getline(mark, markre);
+            cout << "               " << markre;
             getline(mark, markre);
             cout << "               " << markre;
             getline(mark, markre);
             cout << "                           " << markre;
             cout << endl;
         }
-        cin.ignore();
+        cout << "Press enter to continue....";
+        getchar();
+        system("cls");
+        Teacher();
+    }
+    void check_short()
+    {
+        int marks, inc;
+        string ans_rea, namestud, rollstud, topic_name;
+        ifstream file13;
+        file13.open("short_check.txt", ios::app);
+        getline(file13, ans_rea);
+        marks = stoi(ans_rea);
+        getline(file13, ans_rea);
+        namestud = ans_rea;
+        getline(file13, ans_rea);
+        rollstud = ans_rea;
+        getline(file13, ans_rea);
+        topic_name = ans_rea;
+        while (getline(file13, ans_rea))
+        {
+            cout << ans_rea << endl;
+            getline(file13, ans_rea);
+            cout << "Question: " << endl
+                 << ans_rea;
+            cout << endl;
+            getline(file13, ans_rea);
+            cout << "Answer: " << endl
+                 << ans_rea;
+            cout << endl;
+            cout << "Enter the marks you want to give for this answer out of " << marks << ": " << endl;
+            cin >> inc;
+        }
+        ofstream file7;
+        file7.open("marks.txt", ios::app);
+        file7 << namestud << " ( " << rollstud << " )" << endl
+              << topic_name << endl
+              << "Short Answer" << endl
+              << marks << endl;
         cout << "Press enter to continue....";
         getchar();
         system("cls");
@@ -1284,168 +1026,185 @@ public:
             doubt();
         }
     }
-void prac()
-{
-    ifstream file, file1, file2;
-    int inc, dec, ty;
-    file.open("name_test.txt", ios::app);
-    string line, topic, read, line1, ans;
-    string doub;
-    char cor_op, op, cor_op1;
-    cout << "Choose the topic on which you want to give the test: " << endl;
-    int i = 1;
-    while (getline(file, line))
+    void prac()
     {
-        cout << i << ": " << line << endl;
-        i++;
-    }
-    cout << "Enter the topic on which you want to practice questions: ";
-    cin >> topic;
-    string topic_name = topic, type_test_stu, topic_type, topic_store;
-    topic_store = topic;
-    topic = topic + ".txt";
-    file2.open(topic, ios::app);
-    cout << endl
-         << "The type of questions that you can attempt are listed below" << endl;
-    while (getline(file2, type_test_stu))
-    {
-        cout << type_test_stu << endl;
-    }
-    cout << endl
-         << "Enter the type of questions you want to practice: [1/2/3]" << endl;
-    cin >> ty;
-    if (ty == 1)
-    {
-        int marks = 0;
-        topic_store = topic_store + "_objective.txt";
-        file1.open(topic_store, ios::app);
-        getline(file1, read);
-        inc = stoi(read);
-        getline(file1, read);
-        if (read == "Yes" || read == "yes")
+        string namestud, rollstud;
+        ifstream file, file1, file2;
+        int inc, dec, ty;
+        file.open("name_test.txt", ios::app);
+        string line, topic, read, line1, ans;
+        string doub;
+        char cor_op, op, cor_op1;
+        cout << "Choose the topic on which you want to give the test: " << endl;
+        int i = 1;
+        while (getline(file, line))
         {
-            dec = -1;
+            cout << i << ": " << line << endl;
+            i++;
         }
-        else
+        cout << "Enter the topic on which you want to practice questions: ";
+        cin >> topic;
+        string topic_name = topic, type_test_stu, topic_type, topic_store;
+        topic_store = topic;
+        topic = topic + ".txt";
+        file2.open(topic, ios::app);
+        cout << endl
+             << "The type of questions that you can attempt are listed below" << endl;
+        while (getline(file2, type_test_stu))
         {
-            dec = 0;
+            cout << type_test_stu << endl;
         }
-        int number_line = 0;
-        char correctAnswer;
-        while (getline(file1, line1))
+        cout << endl
+             << "Enter the type of questions you want to practice: [1/2/3]" << endl;
+        cin >> ty;
+        if (ty == 1)
         {
-            cout << line1 << endl;
+            int marks = 0, tmarks = 0;
+            topic_store = topic_store + "_objective.txt";
+            file1.open(topic_store, ios::app);
             getline(file1, read);
-            cout << read << endl;
+            inc = stoi(read);
             getline(file1, read);
-            cout << read << endl;
-            getline(file1, read);
-            cout << read << endl;
-            getline(file1, read);
-            cout << read << endl;
-            getline(file1, read);
-            cin >> op;
-            cor_op = read[0];
-            char line = read[0];
-            int num;
-            if (int(line) > 96)
+            if (read == "Yes" || read == "yes")
             {
-                num = int(line) - 32;
-            }
-            if (int(line) < 96)
-            {
-                num = int(line) + 32;
-            }
-            if (op == cor_op || op == char(num))
-            {
-                marks = marks + inc;
+                dec = -1;
             }
             else
             {
-                marks = marks + dec;
+                dec = 0;
             }
-        }
-        cout << "You scored " << marks << " marks in test." << endl;
-        ofstream file7;
-        file7.open("marks.txt", ios::app);
-        file7 << namestud << " ( " << rollstud << " )" << endl
-              << topic_name << endl
-              << marks << endl;
-    }
-    if (ty == 2)
-    {
-        int marks = 0;
-        topic_store = topic_store + "_true.txt";
-        file1.open(topic_store, ios::app);
-        getline(file1, read);
-        inc = stoi(read);
-        while (getline(file1, line1))
-        {
-            cout << line1 << endl;
-            getline(file1, read);
-            cout << read << endl;
-            getline(file1, read);
-            cout << read << endl;
-            getline(file1, read);
-            cin >> op;
-            cor_op = read[0];
-            char line = read[0];
-            int num;
-            if (int(line) > 96)
+            int number_line = 0;
+            char correctAnswer;
+            while (getline(file1, line1))
             {
-                num = int(line) - 32;
-            }
-            if (int(line) < 96)
-            {
-                num = int(line) + 32;
-            }
-            if (op == cor_op || op == char(num))
-            {
-                marks = marks + inc;
+                cout << line1 << endl;
+                getline(file1, read);
+                cout << read << endl;
+                getline(file1, read);
+                cout << read << endl;
+                getline(file1, read);
+                cout << read << endl;
+                getline(file1, read);
+                cout << read << endl;
+                getline(file1, read);
+                cin >> op;
+                cor_op = read[0];
+                char line = read[0];
+                int num;
+                if (int(line) > 96)
+                {
+                    num = int(line) - 32;
+                }
+                if (int(line) < 96)
+                {
+                    num = int(line) + 32;
+                }
+                if (op == cor_op || op == char(num))
+                {
+                    marks = marks + inc;
+                    tmarks = tmarks + inc;
+                }
+                else
+                {
+                    marks = marks + dec;
+                    tmarks = tmarks + inc;
+                }
             }
             cout << "You scored " << marks << " marks in test." << endl;
+            ofstream file7;
+            file7.open("marks.txt", ios::app);
+            file7 << namestud << " ( " << rollstud << " )" << endl
+                  << topic_name << endl
+                  << "Objective" << endl
+                  << marks << endl
+                  << tmarks << endl;
         }
-        ofstream file7;
-        file7.open("marks.txt", ios::app);
-        file7 << namestud << " ( " << rollstud << " )" << endl
-              << topic_name << endl
-              << marks << endl;
-    }
-    if (ty == 3)
-    {
-        int marks = 0;
-        topic_store = topic_store + "_short.txt";
-        file1.open(topic_store, ios::app);
-        getline(file1, read);
-        inc = stoi(read);
-        while (getline(file1, line1))
+        if (ty == 2)
         {
-            cout << line1 << endl;
-            cout << "Enter the Answer (Press Enter to end):";
-            getline(cin, ans);
-            if (ans.empty())
-                break;
+            int marks = 0, tmarks = 0;
+            topic_store = topic_store + "_true.txt";
+            file1.open(topic_store, ios::app);
+            getline(file1, read);
+            inc = stoi(read);
+            while (getline(file1, line1))
+            {
+                cout << line1 << endl;
+                getline(file1, read);
+                cout << read << endl;
+                getline(file1, read);
+                cout << read << endl;
+                getline(file1, read);
+                cin >> op;
+                cor_op = read[0];
+                char line = read[0];
+                int num;
+                if (int(line) > 96)
+                {
+                    num = int(line) - 32;
+                }
+                if (int(line) < 96)
+                {
+                    num = int(line) + 32;
+                }
+                if (op == cor_op || op == char(num))
+                {
+                    marks = marks + inc;
+                    tmarks = tmarks + inc;
+                }
+                cout << "You scored " << marks << " marks in test." << endl;
+            }
+            ofstream file7;
+            file7.open("marks.txt", ios::app);
+            file7 << namestud << " ( " << rollstud << " )" << endl
+                  << topic_name << endl
+                  << "True/False" << endl
+                  << marks << endl
+                  << tmarks << endl;
+        }
+        if (ty == 3)
+        {
+            int marks = 0, tmarks = 0;
+            topic_store = topic_store + "_short.txt";
+            file1.open(topic_store, ios::app);
+            getline(file1, read);
+            inc = stoi(read);
+            ofstream file11;
+            file11.open("short_check.txt", ios::app);
+            file11 << inc << endl;
+            file11 << namestud << endl
+                   << rollstud << endl
+                   << topic_name << endl;
+            while (getline(file1, line1))
+            {
+                file11 << line1 << " ";
+                cout << line1 << endl;
+                cout << "Enter the Answer (Press Enter to end):";
+                getline(cin, ans);
+                if (ans.empty())
+                    break;
+                file11 << ans << " ";
+            }
+            file11 << endl;
+        }
+        ifstream file4, file5, file8;
+        ofstream file3, file6;
+        string name_test_mark;
+        file6.open("test_name_marks.txt", ios::app);
+        file4.open("name_test.txt", ios::app);
+        file6 << name_test_mark << endl;
+        cout << "Do you have any doubts? [Yes/No]";
+        cin >> doub;
+        if (doub == "Yes" || doub == "yes")
+        {
+            doubt();
+        }
+        else
+        {
+            cout << endl
+                 << "You are being redirected to feedback section: ";
+            feedback();
         }
     }
-    ifstream file4, file5, file8;
-    ofstream file3, file6;
-    string name_test_mark;
-    file6.open("test_name_marks.txt", ios::app);
-    file4.open("name_test.txt", ios::app);
-    file6 << name_test_mark << endl;
-    cout << "Do you have any doubts? [Yes/No]";
-    cin >> doub;
-    if (doub == "Yes" || doub == "yes")
-    {
-        doubt();
-    }
-    else
-    {
-        cout << endl
-             << "You are being redirected to feedback section: ";
-        feedback();
-    }
-}
     void doubt()
     {
         cin.ignore();
