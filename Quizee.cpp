@@ -351,6 +351,7 @@ public:
              << "Welcome to teacher's portal for Quizee.";
         cout << endl
              << "Press S to set question paper" << endl
+             << "Press C to check short answers" << endl
              << "Press R to read feedback of students" << endl
              << "Press D to see doubt of students" << endl
              << "Press M to display marks of students " << endl
@@ -367,6 +368,10 @@ public:
         if (fun == 'r' || fun == 'R')
         {
             read_review();
+        }
+        if (fun == 'c' || fun == 'C')
+        {
+            check_short();
         }
         if (fun == 'M' || fun == 'm')
         {
@@ -410,6 +415,7 @@ public:
         {
             cout << "= ";
         }
+        cout << endl;
         cout << "  S.NO";
         cout << "  Student Name";
         cout << "             Test Name";
@@ -428,9 +434,9 @@ public:
             cou++;
             cout << "  " << cou;
             getline(mark, markre);
-            cout << "       " << markre;
+            cout << "     " << markre;
             getline(mark, markre);
-            cout << "               " << markre;
+            cout << "     " << markre;
             getline(mark, markre);
             cout << "               " << markre;
             getline(mark, markre);
@@ -439,6 +445,7 @@ public:
             cout << "                    " << markre;
             cout << endl;
         }
+        cin.ignore();
         cout << "Press enter to continue....";
         getchar();
         system("cls");
@@ -465,8 +472,6 @@ public:
         marks = stoi(ans_rea);
         while (getline(file13, ans_rea))
         {
-            cout << ans_rea << endl;
-            getline(file13, ans_rea);
             cout << "Question: " << endl
                  << ans_rea;
             cout << endl;
@@ -521,17 +526,18 @@ public:
         cin >> type_sub;
         if (type_sub == 1)
         {
-            string rea;
+            string rea, rea111;
             ifstream file4;
             file4.open(sub, ios::app);
             while (getline(file4, rea))
             {
-                if (rea == "Objective")
+                if (rea == "1. Objective")
                 {
+                    rea111 = rea;
                     break;
                 }
             }
-            if (rea == "Objective")
+            if (rea111 == "Objective")
             {
                 cout << "There is already an objective test for " << subt << "." << endl;
                 cout << "Do you want to add questions to it or overwrite that test?" << endl;
@@ -594,7 +600,7 @@ public:
                     system("cls");
                     Teacher();
                 }
-                if (test_do == 2)
+                if (test_do == 1)
                 {
                     string fname;
                     fname = subt + "_objective.txt";
@@ -614,6 +620,7 @@ public:
                     string ques;
                     while (true)
                     {
+                        cin.ignore();
                         cout << "Enter the question (Press Enter to end):";
                         getline(cin, ques);
                         if (ques.empty())
@@ -662,7 +669,7 @@ public:
                     Teacher();
                 }
             }
-            if (rea != "Objective")
+            if (rea111 != "1. Objective")
             {
                 file2 << "1. Objective" << endl;
                 string fname;
@@ -730,17 +737,18 @@ public:
         }
         if (type_sub == 2)
         {
-            string rea;
+            string rea, rea111;
             ifstream file4;
             file4.open(sub, ios::app);
             while (getline(file4, rea))
             {
-                if (rea == "True/False")
+                if (rea == "2. True/False")
                 {
+                    rea111 = rea;
                     break;
                 }
             }
-            if (rea == "True/False")
+            if (rea111 == "2. True/False")
             {
                 cout << "There is already an True/False test for " << subt << "." << endl;
                 cout << "Do you want to add questions to it or overwrite that test?" << endl;
@@ -767,7 +775,7 @@ public:
                         cout << "Enter the correct option: " << endl;
                         cin >> op1;
                         file << endl
-                             << op1;
+                             << op1 << endl;
                         cin.ignore();
                         cout << "Do you want to write another question?" << endl
                              << "Press Y to write and N to exit.";
@@ -788,6 +796,7 @@ public:
                 {
                     string fname;
                     fname = subt + "_true.txt";
+                    cout << fname;
                     remove(fname.c_str());
                     cout << endl
                          << "The old test has been deleted." << endl;
@@ -799,6 +808,7 @@ public:
                     string ques;
                     while (true)
                     {
+                        cin.ignore();
                         cout << "Enter the question (Press Enter to end):";
                         getline(cin, ques);
                         if (ques.empty())
@@ -809,8 +819,8 @@ public:
                              << "B False" << endl;
                         cout << "Enter the correct option: " << endl;
                         cin >> op1;
-                        file << endl
-                             << op1;
+                        file
+                            << op1 << endl;
                         cin.ignore();
                         cout << "Do you want to write another question?" << endl
                              << "Press Y to write and N to exit.";
@@ -828,7 +838,7 @@ public:
                     Teacher();
                 }
             }
-            if (rea != "True/False")
+            if (rea111 != "2. True/False")
             {
                 file2 << "2. True/False" << endl;
                 string fname;
@@ -841,6 +851,7 @@ public:
                 string ques;
                 while (true)
                 {
+                    cin.ignore();
                     cout << "Enter the question (Press Enter to end):";
                     getline(cin, ques);
                     if (ques.empty())
@@ -851,8 +862,8 @@ public:
                          << "B False" << endl;
                     cout << "Enter the correct option: " << endl;
                     cin >> op1;
-                    file << endl
-                         << op1;
+                    file
+                        << op1 << endl;
                     cin.ignore();
                     cout << "Do you want to write another question?" << endl
                          << "Press Y to write and N to exit.";
@@ -872,17 +883,18 @@ public:
         }
         if (type_sub == 3)
         {
-            string rea;
+            string rea, rea111;
             ifstream file4;
             file4.open(sub, ios::app);
             while (getline(file4, rea))
             {
-                if (rea == "Short Answer")
+                if (rea == "3. Short Answer")
                 {
+                    rea111 = rea;
                     break;
                 }
             }
-            if (rea == "Short Answer")
+            if (rea111 == "3. Short Answer")
             {
                 cout << "There is already an Short Answer test for " << subt << "." << endl;
                 cout << "Do you want to add questions to it or overwrite that test?" << endl;
@@ -898,6 +910,7 @@ public:
                     string ques;
                     while (true)
                     {
+                        cin.ignore();
                         cout << "Enter the question (Press Enter to end):";
                         getline(cin, ques);
                         if (ques.empty())
@@ -935,6 +948,7 @@ public:
                     string ques;
                     while (true)
                     {
+                        cin.ignore();
                         cout << "Enter the question (Press Enter to end):";
                         getline(cin, ques);
                         if (ques.empty())
@@ -958,7 +972,7 @@ public:
                     Teacher();
                 }
             }
-            if (rea != "Short Answer")
+            if (rea111 != "3. Short Answer")
             {
                 file2 << "3. Short Answer" << endl;
                 string fname;
@@ -971,6 +985,7 @@ public:
                 string ques;
                 while (true)
                 {
+                    cin.ignore();
                     cout << "Enter the question (Press Enter to end):";
                     getline(cin, ques);
                     if (ques.empty())
@@ -1235,13 +1250,12 @@ public:
                 if (op == cor_op || op == char(num))
                 {
                     marks = marks + inc;
-                    tmarks = tmarks + inc;
                 }
                 else
                 {
                     marks = marks + dec;
-                    tmarks = tmarks + inc;
                 }
+                tmarks = tmarks + inc;
             }
             cout << "You scored " << marks << " marks in test." << endl;
             ofstream file7;
@@ -1279,11 +1293,11 @@ public:
                 {
                     num = int(line) + 32;
                 }
-                if (op == cor_op || op == char(num))
+                if (op == char(num))
                 {
                     marks = marks + inc;
-                    tmarks = tmarks + inc;
                 }
+                tmarks = tmarks + inc;
                 cout << "You scored " << marks << " marks in test." << endl;
             }
             ofstream file7;
@@ -1313,11 +1327,13 @@ public:
             {
                 file11 << line1 << " ";
                 cout << line1 << endl;
+                file11<<endl;
                 cout << "Enter the Answer (Press Enter to end):";
-                getline(cin, ans);
-                if (ans.empty())
+                cin.ignore();
+                getline(cin, line1);
+                if (line1.empty())
                     break;
-                file11 << ans << " ";
+                file11 << line1 << " ";
             }
             file11 << endl;
         }
