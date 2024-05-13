@@ -354,12 +354,17 @@ public:
              << "Press C to check short answers" << endl
              << "Press R to read feedback of students" << endl
              << "Press D to see doubt of students" << endl
-             << "Press M to display marks of students " << endl
+             << "Press M to display marks of students" << endl
+             << "Press P to see student's progress" << endl
              << "Press L to logout" << endl;
         cin >> fun;
         if (fun == 'S' || fun == 's')
         {
             Set();
+        }
+        if (fun == 'p' || fun == 'P')
+        {
+            view_progress();
         }
         if (fun == 'D' || fun == 'd')
         {
@@ -454,18 +459,56 @@ public:
     void check_short()
     {
         int marks, inc, t_mark = 0;
-        string ans_rea, namestud, rollstud, topic_name, re, name_s, name_short_store;
-        ifstream file13, file14;
+        string ans_rea, namestud, rollstud, topic_name, re, name_s, name_short_store, tt;
+        ifstream file13, file14, file15, file16;
         file14.open("name_short.txt", ios::app);
-        cout << endl
-             << "The following students attempted Short Answer Questions: " << endl;
+        file15.open("name_short.txt", ios::app);
+        file16.open("name_short.txt", ios::app);
+        cout << "The following are the topics on which the short questions were attempted: " << endl;
         while (getline(file14, re))
         {
             cout << re << endl;
+            getline(file14, re);
+            getline(file14, re);
+        }
+        cout << endl
+             << "Enter the topic on which you want to check short answers: " << endl;
+        cin >> tt;
+        cout << endl
+             << "The following students attempted Short Answer Questions: " << endl;
+        while (getline(file15, re))
+        {
+            if (tt == re)
+            {
+                getline(file15, re);
+                cout << re;
+                getline(file15, re);
+                cout << " ( " << re << " )" << endl;
+            }
+            else
+            {
+                getline(file15, re);
+                getline(file15, re);
+            }
         }
         cout << endl
              << "Enter the name of student whose answers you want to check: " << endl;
         cin >> name_s;
+        namestud = name_s;
+        while (getline(file16, re))
+        {
+            if (tt == re)
+            {
+                getline(file16, re);
+                getline(file16, re);
+                rollstud = re;
+            }
+            else
+            {
+                getline(file16, re);
+                getline(file16, re);
+            }
+        }
         name_short_store = name_s + "_short_check.txt";
         file13.open(name_short_store, ios::app);
         getline(file13, ans_rea);
@@ -486,9 +529,11 @@ public:
         ofstream file7;
         file7.open("marks.txt", ios::app);
         file7 << namestud << " ( " << rollstud << " )" << endl
+              << tt << endl
               << topic_name << endl
               << "Short Answer" << endl
-              << t_mark << endl;
+              << t_mark << endl
+              << marks << endl;
         cout << "Press enter to continue....";
         getchar();
         system("cls");
@@ -537,7 +582,7 @@ public:
                     break;
                 }
             }
-            if (rea111 == "Objective")
+            if (rea111 == "1. Objective")
             {
                 cout << "There is already an objective test for " << subt << "." << endl;
                 cout << "Do you want to add questions to it or overwrite that test?" << endl;
@@ -600,7 +645,7 @@ public:
                     system("cls");
                     Teacher();
                 }
-                if (test_do == 1)
+                if (test_do == 2)
                 {
                     string fname;
                     fname = subt + "_objective.txt";
@@ -772,7 +817,7 @@ public:
                         file << endl
                              << "A True" << endl
                              << "B False" << endl;
-                        cout << "Enter the correct option: " << endl;
+                        cout << "Enter the correct option: [a for True / b for False]" << endl;
                         cin >> op1;
                         file << endl
                              << op1 << endl;
@@ -817,7 +862,7 @@ public:
                         file << endl
                              << "A True" << endl
                              << "B False" << endl;
-                        cout << "Enter the correct option: " << endl;
+                        cout << "Enter the correct option: [a for True / b for False]" << endl;
                         cin >> op1;
                         file
                             << op1 << endl;
@@ -860,7 +905,7 @@ public:
                     file << endl
                          << "A True" << endl
                          << "B False" << endl;
-                    cout << "Enter the correct option: " << endl;
+                    cout << "Enter the correct option: [a for True / b for False]" << endl;
                     cin >> op1;
                     file
                         << op1 << endl;
@@ -916,10 +961,10 @@ public:
                         if (ques.empty())
                             break;
                         file << ques << " ";
+                        file << endl;
                         cout << "Do you want to write another question?" << endl
                              << "Press Y to write and N to exit.";
                         cin >> cont;
-                        file << endl;
                         if (cont == 'N' || cont == 'n')
                         {
                             break;
@@ -954,10 +999,10 @@ public:
                         if (ques.empty())
                             break;
                         file << ques << " ";
+                        file << endl;
                         cout << "Do you want to write another question?" << endl
                              << "Press Y to write and N to exit.";
                         cin >> cont;
-                        file << endl;
                         if (cont == 'N' || cont == 'n')
                         {
                             break;
@@ -991,6 +1036,7 @@ public:
                     if (ques.empty())
                         break;
                     file << ques << " ";
+                    file << endl;
                     cout << "Do you want to write another question?" << endl
                          << "Press Y to write and N to exit.";
                     cin >> cont;
@@ -1059,11 +1105,16 @@ public:
         cout << "Press T for giving tests" << endl
              << "Press D for sending doubts to your teacher" << endl
              << "Press M to see your scorecard" << endl
+             << "Press P to see your progress" << endl
              << "Press L to logout" << endl;
         cin >> fun;
         if (fun == 'T' || fun == 't')
         {
             prac();
+        }
+        if (fun == 'p' || fun == 'P')
+        {
+            prog();
         }
         else if (fun == 'M' || fun == 'm')
         {
@@ -1076,15 +1127,13 @@ public:
     }
     void prog()
     {
-        string namestud = "Mehar", rollstud = "231";
         string search_name;
-        search_name = namestud + " (" + rollstud + ")";
+        search_name = namestud + " ( " + rollstud + " )";
         ifstream file15;
         string r, markre;
         int mark_obt = 0, mark_tot = 0;
         cout << endl;
         file15.open("marks.txt", ios::app);
-        int i = 0;
         while (getline(file15, r))
         {
             if (r == search_name)
@@ -1102,27 +1151,36 @@ public:
         cout << endl;
         ofstream progress;
         progress.open("progress.txt", ios::app);
-        progress << namestud << " (" << rollstud << ")" << endl;
+        progress << namestud << " ( " << rollstud << " )" << endl;
+        cout << namestud << " ( " << rollstud << " ) has performed ";
         if (prog < 20)
         {
             progress << "very bad";
+            cout << "very bad";
         }
         else if (prog >= 20 && prog < 40)
         {
             progress << "bad";
+            cout << "bad";
         }
         else if (prog >= 40 && prog < 60)
         {
             progress << "moderate";
+            cout << "moderate";
         }
         else if (prog >= 60 && prog < 80)
         {
             progress << "good";
+            cout << "good";
         }
         else if (prog >= 80)
         {
             progress << "very good";
+            cout << "very good";
         }
+        progress << endl;
+        cout << " in test." << endl;
+        cin.ignore();
         cout << "Press enter to continue....";
         getchar();
         system("cls");
@@ -1130,9 +1188,8 @@ public:
     }
     void view_mark()
     {
-        string namestud = "Mehar", rollstud = "231";
         string search_name;
-        search_name = namestud + " (" + rollstud + ")";
+        search_name = namestud + " ( " + rollstud + " )";
         ifstream file15;
         string r, markre;
         for (int i = 0; i <= 55; i++)
@@ -1170,6 +1227,7 @@ public:
                 cout << endl;
             }
         }
+        cin.ignore();
         cout << "Press enter to continue....";
         getchar();
         system("cls");
@@ -1177,7 +1235,10 @@ public:
     }
     void prac()
     {
-        ifstream file, file1, file2;
+        const char *sss = "anskey.txt";
+        ifstream file, file1, file2, file9;
+        ofstream file99;
+        file99.open("anskey.txt");
         int inc, dec, ty;
         file.open("name_test.txt", ios::app);
         string line, topic, read, line1, ans;
@@ -1192,7 +1253,7 @@ public:
         }
         cout << "Enter the topic on which you want to practice questions: ";
         cin >> topic;
-        string topic_name = topic, type_test_stu, topic_type, topic_store;
+        string topic_name = topic, type_test_stu, topic_type, topic_store, topic_store1 = topic;
         topic_store = topic;
         topic = topic + ".txt";
         file2.open(topic, ios::app);
@@ -1207,6 +1268,7 @@ public:
         cin >> ty;
         if (ty == 1)
         {
+            remove(sss);
             int marks = 0, tmarks = 0;
             topic_store = topic_store + "_objective.txt";
             file1.open(topic_store, ios::app);
@@ -1225,16 +1287,22 @@ public:
             char correctAnswer;
             while (getline(file1, line1))
             {
+                file99 << line1 << endl;
                 cout << line1 << endl;
                 getline(file1, read);
+                file99 << read << endl;
                 cout << read << endl;
                 getline(file1, read);
+                file99 << read << endl;
                 cout << read << endl;
                 getline(file1, read);
+                file99 << read << endl;
                 cout << read << endl;
                 getline(file1, read);
+                file99 << read << endl;
                 cout << read << endl;
                 getline(file1, read);
+                file99 << "Correct option is : " << read << endl;
                 cin >> op;
                 cor_op = read[0];
                 char line = read[0];
@@ -1265,9 +1333,22 @@ public:
                   << "Objective" << endl
                   << marks << endl
                   << tmarks << endl;
+            string tttt, line44;
+            cout << "Do you want to see the answer key?[yes/no]";
+            cin >> tttt;
+            if (tttt == "yes" || tttt == "Yes")
+            {
+                file9.open("anskey.txt", ios::app);
+                while (getline(file9, line44))
+                {
+                    cout << line44 << endl;
+                }
+                file9.close();
+            }
         }
         if (ty == 2)
         {
+            remove(sss);
             int marks = 0, tmarks = 0;
             topic_store = topic_store + "_true.txt";
             file1.open(topic_store, ios::app);
@@ -1275,12 +1356,16 @@ public:
             inc = stoi(read);
             while (getline(file1, line1))
             {
+                file99 << line1 << endl;
                 cout << line1 << endl;
                 getline(file1, read);
+                file99 << read << endl;
                 cout << read << endl;
                 getline(file1, read);
+                file99 << read << endl;
                 cout << read << endl;
                 getline(file1, read);
+                file99 << "Correct option is : " << read << endl;
                 cin >> op;
                 cor_op = read[0];
                 char line = read[0];
@@ -1293,13 +1378,13 @@ public:
                 {
                     num = int(line) + 32;
                 }
-                if (op == char(num))
+                if (op == char(num) || op == read[0])
                 {
                     marks = marks + inc;
                 }
                 tmarks = tmarks + inc;
-                cout << "You scored " << marks << " marks in test." << endl;
             }
+            cout << "You scored " << marks << " marks in test." << endl;
             ofstream file7;
             file7.open("marks.txt", ios::app);
             file7 << namestud << " ( " << rollstud << " )" << endl
@@ -1307,6 +1392,18 @@ public:
                   << "True/False" << endl
                   << marks << endl
                   << tmarks << endl;
+            string tttt, line44;
+            cout << "Do you want to see the answer key?[yes/no]";
+            cin >> tttt;
+            if (tttt == "yes" || tttt == "Yes")
+            {
+                file9.open("anskey.txt", ios::app);
+                while (getline(file9, line44))
+                {
+                    cout << line44 << endl;
+                }
+                file9.close();
+            }
         }
         if (ty == 3)
         {
@@ -1322,12 +1419,14 @@ public:
             file11.open(name_short_store, ios::app);
             file11 << inc << endl;
             file12.open("name_short.txt", ios::app);
-            file12 << namestud;
+            file12 << topic_store1 << endl
+                   << namestud << endl
+                   << rollstud << endl;
             while (getline(file1, line1))
             {
                 file11 << line1 << " ";
                 cout << line1 << endl;
-                file11<<endl;
+                file11 << endl;
                 cout << "Enter the Answer (Press Enter to end):";
                 cin.ignore();
                 getline(cin, line1);
@@ -1337,13 +1436,14 @@ public:
             }
             file11 << endl;
         }
+        file9.close();
+        remove("anskey.txt");
         ifstream file4, file5, file8;
         ofstream file3, file6;
         string name_test_mark;
         file6.open("test_name_marks.txt", ios::app);
         file4.open("name_test.txt", ios::app);
         file6 << name_test_mark << endl;
-        prog();
         cout << "Do you have any doubts? [Yes/No]";
         cin >> doub;
         if (doub == "Yes" || doub == "yes")
@@ -1378,13 +1478,19 @@ public:
         string feed;
         feedback.open("feedback.txt", ios::app);
         feedback << namestud << " ( " << rollstud << " ) : ";
+        cin.ignore();
         cout << endl
              << "You can write your feedback here: (Press Enter to end)" << endl;
         getline(cin, feed);
         feedback << feed << " ";
         feedback << endl;
         cout << endl
-             << "Thank you for your feedback. We are redirecting you to home page.";
+             << "Thank you for your feedback.";
+        cin.ignore();
+        cout << endl
+             << "Press enter to continue....";
+        getchar();
+        system("cls");
         Student stude(namestud, rollstud);
     }
 };
